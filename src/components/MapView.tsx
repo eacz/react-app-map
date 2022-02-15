@@ -17,7 +17,7 @@ const MapView = () => {
         zoom: 15,
       })
     }
-  }, [isLoading, userLocation])
+  }, [isLoading])
 
   if (isLoading) {
     return <Loading />

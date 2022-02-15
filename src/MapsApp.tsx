@@ -1,9 +1,11 @@
-import { PlacesProvider } from './context'
+import { PlacesProvider, MapProvider } from './context'
 import { HomePage } from './pages'
 const MapsApp = () => {
   return (
     <PlacesProvider>
-      <HomePage />
+      <MapProvider>
+        <HomePage />
+      </MapProvider>
     </PlacesProvider>
   )
 }
