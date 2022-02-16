@@ -1,9 +1,10 @@
-import { MapView } from "../components"
+import { MapView, ToMyLocation } from "../components"
 
 const HomePage = () => {
   return (
     <div>
       <MapView />
+      <ToMyLocation />
     </div>
   )
 }

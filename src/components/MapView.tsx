@@ -13,7 +13,7 @@ const MapView = () => {
     if (!isLoading) {
       const map = new Map({
         container: mapDiv.current!,
-        style: 'mapbox://styles/mapbox/streets-v11',
+        style: 'mapbox://styles/mapbox/dark-v10',
         center: userLocation,
         zoom: 15,
       })

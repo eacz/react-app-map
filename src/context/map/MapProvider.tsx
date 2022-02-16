@@ -1,5 +1,5 @@
 import { FC, useMemo, useReducer } from 'react'
-import { Map } from 'mapbox-gl'
+import { Map, Marker, Popup } from 'mapbox-gl'
 import MapContext from './MapContext'
 import MapReducer from './MapReducer'
 
@@ -17,9 +17,19 @@ const MapProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(MapReducer, initialState)
 
   const setMap = (map: Map) => {
+    
+    const myLocationPopUp = new Popup()
+      .setHTML(`<h4>Here I'm </h4> <p>Resis City</p>`)
+
+
+    new Marker({color: '#61DAFB'})
+      .setLngLat(map.getCenter())
+      .setPopup(myLocationPopUp)
+      .addTo(map)
+
     dispatch({type: 'setMap', payload: map})
   }
-  
+
   return (
     <MapContext.Provider
       value={{
