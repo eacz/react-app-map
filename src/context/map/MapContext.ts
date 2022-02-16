@@ -3,7 +3,8 @@ import { Map } from 'mapbox-gl'
 
 interface MapContextProps {
   isMapReady: boolean
-  map?: Map
+  map?: Map,
+  setMap: (map:Map) => void
 }
 
 const MapContext = createContext({} as MapContextProps)
