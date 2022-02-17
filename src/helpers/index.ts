@@ -1,3 +1,1 @@
-import getUserLocation from './getUserLocation';
-
-export { getUserLocation }
+export { default as getUserLocation } from './getUserLocation'

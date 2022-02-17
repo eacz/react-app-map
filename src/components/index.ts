@@ -1,5 +1,4 @@
-import MapView from './MapView'
-import Loading from './Loading';
-import ToMyLocation from './ToMyLocation';
-
-export { MapView, Loading, ToMyLocation }
+export { default as MapView } from './MapView'
+export { default as Loading } from './Loading'
+export { default as ToMyLocation } from './ToMyLocation'
+export { default as SearchBar } from './SearchBar'

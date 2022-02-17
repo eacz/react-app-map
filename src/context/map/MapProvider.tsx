@@ -1,4 +1,4 @@
-import { FC, useMemo, useReducer } from 'react'
+import { FC, useReducer } from 'react'
 import { Map, Marker, Popup } from 'mapbox-gl'
 import MapContext from './MapContext'
 import MapReducer from './MapReducer'
