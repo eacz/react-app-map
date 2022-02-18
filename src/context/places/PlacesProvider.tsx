@@ -25,7 +25,10 @@ const PlacesProvider: FC = ({children}) => {
   const [state, dispatch] = useReducer(placesReducer, initialState)
 
   const searchPlacesByTerm = async (query:string): Promise<Feature[]> => {
-    if(query.length === 0) return [] //TODO: clean state
+    if(query.length === 0) {
+      dispatch({type: 'setPlaces', payload:[] })
+      return []
+    }  
     if(!state.userLocation)  throw new Error('There is no user location!')
 
     dispatch({type: 'setIsLoadingPlaces', payload: true})
