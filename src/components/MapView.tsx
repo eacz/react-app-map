@@ -28,7 +28,7 @@ const MapView = () => {
   return (
     <div
       ref={mapDiv}
-      style={{ backgroundColor: 'red', height: '100vh', width: '100vw', position: 'fixed', top: 0, left: 0 }}
+      style={{ height: '100vh', width: '100vw', position: 'fixed', top: 0, left: 0 }}
     ></div>
   )
 }

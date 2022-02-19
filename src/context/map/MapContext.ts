@@ -1,9 +1,10 @@
 import { createContext } from 'react'
-import { Map } from 'mapbox-gl'
+import { Map, Marker } from 'mapbox-gl'
 
 interface MapContextProps {
   isMapReady: boolean
   map?: Map,
+  markers: Marker[]
   setMap: (map:Map) => void
 }
 
