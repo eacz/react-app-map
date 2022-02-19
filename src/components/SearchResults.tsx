@@ -4,8 +4,8 @@ import { MapContext, PlacesContext } from '../context'
 import { Feature } from '../interfaces/places'
 
 const SearchResults = () => {
-  const { places, isLoadingPlaces } = useContext(PlacesContext)
-  const { map } = useContext(MapContext)
+  const { places, isLoadingPlaces, userLocation } = useContext(PlacesContext)
+  const { map, getRouteBetweenPoints } = useContext(MapContext)
   const [activePlace, setActivePlace] = useState('')
 
   const onPlaceClick = (place: Feature) => {
@@ -17,24 +17,37 @@ const SearchResults = () => {
     })
   }
 
+  const getRoute = (place: Feature) => {
+    if (!userLocation) return
+  
+    const [lng, lat] = place.center
+    getRouteBetweenPoints(userLocation, [lng, lat])
+  }
+
   if (isLoadingPlaces) {
     return <LoadingPlaces />
   }
 
-  if(places.length === 0) return <></>
+  if (places.length === 0) return <></>
 
   return (
     <ul className='list-group mt-3'>
       {places.map((place) => (
-        <li 
-          onClick={() => onPlaceClick(place)} key={place.id} 
-          className={`list-group-item list-group-item-action pointer ${place.id === activePlace ? 'active' : ''}`}
+        <li
+          onClick={() => onPlaceClick(place)}
+          key={place.id}
+          className={`list-group-item list-group-item-action pointer ${
+            place.id === activePlace ? 'active' : ''
+          }`}
         >
           <h6>{place.text_en}</h6>
-          <p style={{ fontSize: 12 }}>
-            {place.place_name}
-          </p>
-          <button className={`btn btn-sm ${place.id === activePlace ? 'btn-outline-light' : 'btn-outline-primary'}`} >Directions</button>
+          <p style={{ fontSize: 12 }}>{place.place_name}</p>
+          <button
+            onClick={() => getRoute(place)}
+            className={`btn btn-sm ${place.id === activePlace ? 'btn-outline-light' : 'btn-outline-primary'}`}
+          >
+            Directions
+          </button>
         </li>
       ))}
     </ul>

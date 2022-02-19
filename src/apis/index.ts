@@ -1,3 +1,2 @@
-import searchApi from './searchApi'
-
-export { searchApi }
+export { default as searchApi } from './searchApi'
+export { default as directionsApi } from './directionsApi'
