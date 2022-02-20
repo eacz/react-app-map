@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MapsApp from './MapsApp';
 import './globalStyles.css'
-import mapboxgl from 'mapbox-gl'
+//@ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl from '!mapbox-gl'
 
 mapboxgl.accessToken=process.env.REACT_APP_MAPBOX_TOKEN || ''
 
