@@ -1,12 +1,19 @@
-import { PlacesProvider, MapProvider } from './context'
+import { useContext } from 'react'
+import { ThemeProvider } from 'styled-components'
+import { PlacesProvider, MapProvider, ThemeContext } from './context'
 import { HomePage } from './pages'
+
 const MapsApp = () => {
+  const { currentTheme } = useContext(ThemeContext)
+
   return (
-    <PlacesProvider>
-      <MapProvider>
-        <HomePage />
-      </MapProvider>
-    </PlacesProvider>
+    <ThemeProvider theme={currentTheme}>
+      <PlacesProvider>
+        <MapProvider>
+          <HomePage />
+        </MapProvider>
+      </PlacesProvider>
+    </ThemeProvider>
   )
 }
 

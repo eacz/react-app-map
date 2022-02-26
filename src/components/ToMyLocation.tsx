@@ -1,27 +1,26 @@
-import { useContext } from "react"
-import { MapContext, PlacesContext } from "../context"
+import { useContext } from 'react'
+import { MapContext, PlacesContext } from '../context'
+import FabButton from './FabButton'
 
 const ToMyLocation = () => {
   const { map } = useContext(MapContext)
   const { userLocation } = useContext(PlacesContext)
 
   const onClick = () => {
-    if(!map) throw new Error("The map isn't ready yet!")
-    if(!userLocation) throw new Error("There is no an user location!")
+    if (!map) throw new Error("The map isn't ready yet!")
+    if (!userLocation) throw new Error('There is no an user location!')
 
-    map.flyTo({zoom: 14, center: userLocation })
+    map.flyTo({ zoom: 14, center: userLocation })
   }
 
-  if(!map){
-    return (
-      <></>
-    )
+  if (!map) {
+    return <></>
   }
 
   return (
-    <button className="btn btn-primary" onClick={onClick} style={{position: 'fixed', top: 20, right: 20, zIndex: 999}} >
-      My ubication
-    </button>
+    <FabButton top={20} right={20} onClick={onClick}>
+      <i className='fas fa-compass'></i>
+    </FabButton>
   )
 }
 

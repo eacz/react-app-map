@@ -1,3 +1,5 @@
+export { default as ThemeContext } from './theme/ThemeContext'
+export { default as ThemeProvider } from './theme/ThemeProvider'
 export { default as MapContext } from './map/MapContext'
 export { default as MapProvider } from './map/MapProvider'
 export { default as PlacesContext } from './places/PlacesContext'

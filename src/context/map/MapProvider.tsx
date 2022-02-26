@@ -1,8 +1,8 @@
-import { FC, useContext, useEffect, useReducer } from 'react'
+import { FC, useCallback, useContext, useEffect, useReducer } from 'react'
 //@ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import { AnySourceData, LngLatBounds, Map, Marker, Popup } from '!mapbox-gl'
-import { MapContext, PlacesContext } from '../'
+import { MapContext, PlacesContext, ThemeContext } from '../'
 import MapReducer from './MapReducer'
 import { directionsApi } from '../../apis'
 import { DirectionsResponse } from '../../interfaces/directions'
@@ -10,40 +10,49 @@ export interface MapState {
   isMapReady: boolean
   map?: Map
   markers: Marker[]
+  currentZoom: number | null
+  currentLocation: [number, number] | null
 }
 
 const initialState: MapState = {
   isMapReady: false,
   map: undefined,
   markers: [],
+  currentZoom: null,
+  currentLocation: null,
 }
 
 const sourceAndPolyLineId = 'routePolyLine'
 
 const MapProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(MapReducer, initialState)
-  const { places } = useContext(PlacesContext)
-
-  useEffect(() => {
-    state.markers.forEach((marker) => marker.remove())
-    const newMarkers: Marker[] = []
-
-    for (const place of places) {
-      const [lng, lat] = place.center
-      const popup = new Popup().setHTML(`<h6>${place.text_en}</h6> <p>${place.place_name_en}</p>`)
-      const newMarker = new Marker().setPopup(popup).setLngLat([lng, lat]).addTo(state.map!)
-      newMarkers.push(newMarker)
-    }
-
-    dispatch({ type: 'setMarkers', payload: newMarkers })
-  }, [places])
+  const { places, userLocation } = useContext(PlacesContext)
+  const { currentTheme } = useContext(ThemeContext)
 
   const setMap = (map: Map) => {
-    const myLocationPopUp = new Popup().setHTML(`<h4>Here I'm </h4> <p>Resis City</p>`)
+    const myLocationPopUp = new Popup().setHTML(`<h4>Here I'm </h4>`)
 
-    new Marker({ color: '#001780' }).setLngLat(map.getCenter()).setPopup(myLocationPopUp).addTo(map)
+    new Marker({ color: '#001780' }).setLngLat(userLocation).setPopup(myLocationPopUp).addTo(map)
 
     dispatch({ type: 'setMap', payload: map })
+
+    //TODO: type event
+    map.on('zoomend', (e: any) => {
+      setZoom(e.target.transform._zoom)
+    })
+
+    //TODO: type event
+    map.on('moveend', (e: any) => {
+      setCurrentLocation(e.target.transform._center)
+    })
+  }
+
+  const setZoom = (zoom: number) => {
+    dispatch({ type: 'setZoom', payload: zoom })
+  }
+
+  const setCurrentLocation = ({ lat, lng }: { lng: number; lat: number }) => {
+    dispatch({type: 'setCurrentLocation', payload: [lng, lat]})
   }
 
   const getRouteBetweenPoints = async (start: [number, number], end: [number, number]) => {
@@ -82,7 +91,7 @@ const MapProvider: FC = ({ children }) => {
         ],
       },
     }
-    if(state.map?.getLayer(sourceAndPolyLineId)) {
+    if (state.map?.getLayer(sourceAndPolyLineId)) {
       state.map.removeLayer(sourceAndPolyLineId)
       state.map.removeSource(sourceAndPolyLineId)
     }
@@ -101,8 +110,25 @@ const MapProvider: FC = ({ children }) => {
         'line-width': 3,
       },
     })
-
   }
+
+  const setMarkers = useCallback(() => {
+    state.markers.forEach((marker) => marker.remove())
+    const newMarkers: Marker[] = []
+
+    for (const place of places) {
+      const [lng, lat] = place.center
+      const popup = new Popup().setHTML(`<h6>${place.text_en}</h6> <p>${place.place_name_en}</p>`)
+      const newMarker = new Marker().setPopup(popup).setLngLat([lng, lat]).addTo(state.map!)
+      newMarkers.push(newMarker)
+    }
+
+    dispatch({ type: 'setMarkers', payload: newMarkers })
+  }, [places, currentTheme, state.map])
+
+  useEffect(() => {
+    setMarkers()
+  }, [places, setMarkers])
 
   return (
     <MapContext.Provider
@@ -110,6 +136,9 @@ const MapProvider: FC = ({ children }) => {
         ...state,
         setMap,
         getRouteBetweenPoints,
+        setMarkers,
+        setZoom,
+        setCurrentLocation,
       }}
     >
       {children}

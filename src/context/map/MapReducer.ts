@@ -6,6 +6,8 @@ import { MapState } from './MapProvider'
 type MapActions = 
 | { type: 'setMap'; payload: Map } 
 | { type: 'setMarkers'; payload: Marker[] }
+| { type: 'setZoom'; payload: number }
+| { type: 'setCurrentLocation'; payload: [number, number] }
 
 const MapReducer = (state: MapState, action: MapActions): MapState => {
   switch (action.type) {
@@ -13,6 +15,10 @@ const MapReducer = (state: MapState, action: MapActions): MapState => {
       return { ...state, map: action.payload, isMapReady: true }
     case 'setMarkers':
       return { ...state, markers: action.payload }
+    case 'setZoom': 
+      return {...state, currentZoom: action.payload}
+    case 'setCurrentLocation': 
+      return {...state, currentLocation: action.payload}
     default:
       return state
   }

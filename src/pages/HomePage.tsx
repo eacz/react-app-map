@@ -1,4 +1,5 @@
 import { MapView, SearchBar, ToMyLocation } from "../components"
+import ToggleThemeButton from "../components/ToggleThemeButton"
 
 const HomePage = () => {
   return (
@@ -6,6 +7,7 @@ const HomePage = () => {
       <MapView />
       <ToMyLocation />
       <SearchBar />
+      <ToggleThemeButton />
     </div>
   )
 }
