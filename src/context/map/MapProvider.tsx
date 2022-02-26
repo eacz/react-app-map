@@ -5,13 +5,14 @@ import { AnySourceData, LngLatBounds, Map, Marker, Popup } from '!mapbox-gl'
 import { MapContext, PlacesContext, ThemeContext } from '../'
 import MapReducer from './MapReducer'
 import { directionsApi } from '../../apis'
-import { DirectionsResponse } from '../../interfaces/directions'
+import { DirectionInfo, DirectionsResponse, IDirection } from '../../interfaces/directions'
 export interface MapState {
   isMapReady: boolean
   map?: Map
   markers: Marker[]
   currentZoom: number | null
-  currentLocation: [number, number] | null
+  currentLocation: [number, number] | null,
+  directionInfo: DirectionInfo | null,
 }
 
 const initialState: MapState = {
@@ -20,6 +21,7 @@ const initialState: MapState = {
   markers: [],
   currentZoom: null,
   currentLocation: null,
+  directionInfo: null
 }
 
 const sourceAndPolyLineId = 'routePolyLine'
@@ -52,10 +54,11 @@ const MapProvider: FC = ({ children }) => {
   }
 
   const setCurrentLocation = ({ lat, lng }: { lng: number; lat: number }) => {
-    dispatch({type: 'setCurrentLocation', payload: [lng, lat]})
+    dispatch({ type: 'setCurrentLocation', payload: [lng, lat] })
   }
 
-  const getRouteBetweenPoints = async (start: [number, number], end: [number, number]) => {
+  const getRouteBetweenPoints = async (direction: IDirection) => {
+    const { start, end } = direction
     const res = await directionsApi.get<DirectionsResponse>(`/${start.join(',')};${end.join(',')}`)
     const { distance, duration, geometry } = res.data.routes[0]
     const { coordinates: coords } = geometry
@@ -66,6 +69,8 @@ const MapProvider: FC = ({ children }) => {
 
     const minutes = Math.floor(duration / 60)
     console.log({ kms, minutes })
+
+    dispatch({type: 'setCurrentDirectionInfo', payload: { kms, minutes }})
 
     const bounds = new LngLatBounds(start, start)
     for (const coord of coords) {

@@ -1,4 +1,5 @@
 import { MapView, SearchBar, ToMyLocation } from "../components"
+import DirectionsInfo from "../components/DirectionsInfo"
 import ToggleThemeButton from "../components/ToggleThemeButton"
 
 const HomePage = () => {
@@ -8,6 +9,7 @@ const HomePage = () => {
       <ToMyLocation />
       <SearchBar />
       <ToggleThemeButton />
+      <DirectionsInfo />
     </div>
   )
 }

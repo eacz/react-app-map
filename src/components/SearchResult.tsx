@@ -39,7 +39,7 @@ const SearchResult = ({ place, activePlace, setActivePlace }: Props) => {
     if (!userLocation) return
 
     const [lng, lat] = place.center
-    getRouteBetweenPoints(userLocation, [lng, lat])
+    getRouteBetweenPoints({start: userLocation, end: [lng, lat]})
   }
 
   return (

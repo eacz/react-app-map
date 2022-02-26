@@ -8,7 +8,7 @@ import { Loading } from './'
 
 const MapView = () => {
   const { currentTheme: { mapTheme } } = useContext(ThemeContext)
-  const { userLocation, isLoading,  } = useContext(PlacesContext)
+  const { userLocation, isLoading,   } = useContext(PlacesContext)
   const { setMap, currentZoom, currentLocation } = useContext(MapContext)
   const mapDiv = useRef<HTMLDivElement>(null)
 
