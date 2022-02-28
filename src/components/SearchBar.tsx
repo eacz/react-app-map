@@ -2,6 +2,7 @@ import { ChangeEvent, useContext, useRef } from 'react'
 import { SearchResults } from '.'
 import { PlacesContext } from '../context'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -24,6 +25,7 @@ const Wrapper = styled.div`
 const SearchBar = () => {
   const debounceRef = useRef<NodeJS.Timeout>()
   const { searchPlacesByTerm } = useContext(PlacesContext)
+  const { t } = useTranslation()
 
   const onQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (debounceRef.current) {
@@ -36,7 +38,7 @@ const SearchBar = () => {
 
   return (
     <Wrapper>
-      <input type='text' className='form-control' placeholder='Search Place' onChange={onQueryChange} />
+      <input type='text' className='form-control' placeholder={t('search')} onChange={onQueryChange} />
       <SearchResults />
     </Wrapper>
   )

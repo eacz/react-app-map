@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { LoadingPlaces } from '.'
 import { PlacesContext } from '../context'
-import SearchResult from './SearchResult'
+import { SearchResult } from './'
 
 const SearchResults = () => {
   const { places, isLoadingPlaces } = useContext(PlacesContext)

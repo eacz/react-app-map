@@ -1,4 +1,5 @@
 import { FC, useEffect, useReducer } from "react"
+import { useTranslation } from "react-i18next";
 import { PlacesContext } from ".."
 import { searchApi } from "../../apis"
 import { getUserLocation } from "../../helpers"
@@ -23,7 +24,8 @@ const initialState: PlacesState = {
 
 const PlacesProvider: FC = ({children}) => {
   const [state, dispatch] = useReducer(placesReducer, initialState)
-
+  const { i18n } = useTranslation()
+  
   const searchPlacesByTerm = async (query:string): Promise<Feature[]> => {
     if(query.length === 0) {
       dispatch({type: 'setPlaces', payload:[] })
@@ -34,7 +36,8 @@ const PlacesProvider: FC = ({children}) => {
     dispatch({type: 'setIsLoadingPlaces', payload: true})
     const res = await searchApi.get<PlacesResponse>(`${query}.json`, {
       params: {
-        proximity: state.userLocation.join(',')
+        proximity: state.userLocation.join(','),
+        language: i18n.language
       }
     })
     dispatch({type: 'setPlaces', payload: res.data.features})

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { MapContext, PlacesContext } from '../context'
-import FabButton from './FabButton'
+import { FabButton } from './'
 
 const ToMyLocation = () => {
   const { map } = useContext(MapContext)

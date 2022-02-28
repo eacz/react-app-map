@@ -1,19 +1,20 @@
-import { useContext } from 'react'
+import { Suspense, useContext } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { PlacesProvider, MapProvider, ThemeContext } from './context'
-import { HomePage } from './pages'
+import { HomePage, LoadingPage } from './pages'
 
 const MapsApp = () => {
   const { currentTheme } = useContext(ThemeContext)
-
   return (
-    <ThemeProvider theme={currentTheme}>
-      <PlacesProvider>
-        <MapProvider>
-          <HomePage />
-        </MapProvider>
-      </PlacesProvider>
-    </ThemeProvider>
+    <Suspense fallback={<LoadingPage />}>
+      <ThemeProvider theme={currentTheme}>
+        <PlacesProvider>
+          <MapProvider>
+            <HomePage />
+          </MapProvider>
+        </PlacesProvider>
+      </ThemeProvider>
+    </Suspense>
   )
 }
 

@@ -13,6 +13,7 @@ export interface Feature {
   relevance:     number;
   properties:    Properties;
   text_en:       string;
+  text_es:       string;
   place_name_en: string;
   text:          string;
   place_name:    string;

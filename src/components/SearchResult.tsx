@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import styled from 'styled-components'
 import { Feature } from '../interfaces/places'
 import { MapContext, PlacesContext } from '../context'
+import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled.li`
   .list-group-item {
@@ -25,6 +26,7 @@ interface Props {
 const SearchResult = ({ place, activePlace, setActivePlace }: Props) => {
   const { userLocation } = useContext(PlacesContext)
   const { map, getRouteBetweenPoints } = useContext(MapContext)
+  const { t } = useTranslation()
 
   const onPlaceClick = (place: Feature) => {
     setActivePlace(place.id)
@@ -48,13 +50,14 @@ const SearchResult = ({ place, activePlace, setActivePlace }: Props) => {
       key={place.id}
       className={`list-group-item list-group-item-action pointer ${place.id === activePlace ? 'active' : ''}`}
     >
-      <h6>{place.text_en}</h6>
+      {/* TODO: handle this reading properties through i18n */}
+      <h6>{place.text_en || place.text_es}</h6>
       <p>{place.place_name}</p>
       <button
         onClick={() => getRoute(place)}
         className={`btn btn-sm ${place.id === activePlace ? 'btn-outline-light' : 'btn-outline-primary'}`}
       >
-        Directions
+        {t('direction')}
       </button>
     </Wrapper>
   )

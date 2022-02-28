@@ -6,6 +6,7 @@ import './globalStyles.css'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl'
 import { ThemeProvider } from './context'
+import './config/i18n'
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || ''
 

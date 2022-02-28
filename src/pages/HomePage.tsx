@@ -1,6 +1,4 @@
-import { MapView, SearchBar, ToMyLocation } from "../components"
-import DirectionsInfo from "../components/DirectionsInfo"
-import ToggleThemeButton from "../components/ToggleThemeButton"
+import { MapView, SearchBar, ToMyLocation, ToggleThemeButton, DirectionsInfo } from "../components"
 
 const HomePage = () => {
   return (

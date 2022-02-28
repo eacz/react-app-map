@@ -1,0 +1,12 @@
+{
+  "directions": {
+    "minutes": "minutes",
+    "kilometers": "kms"
+  },
+  "search": "Seach places",
+  "direction":"Directions",
+  "loadingPlaces": {
+    "h6": "Searching...",
+    "p": "Wait please..."
+  }
+}

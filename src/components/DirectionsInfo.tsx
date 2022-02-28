@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { MapContext } from '../context';
+import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -19,13 +20,14 @@ const Wrapper = styled.div`
 
 const DirectionsInfo = () => {
   const { directionInfo } = useContext(MapContext)
+  const { t } = useTranslation()
   
   if(!directionInfo) return <></>
 
   return (
     <Wrapper>
-      <p>{directionInfo.kms} kms</p>
-      <p>{directionInfo.minutes} minutes</p>
+      <p>{directionInfo.kms} {t('directions.kilometers')}</p>
+      <p>{directionInfo.minutes} {t('directions.minutes')}</p>
     </Wrapper>
   )
 }

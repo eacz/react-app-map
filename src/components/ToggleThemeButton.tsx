@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { ThemeContext } from '../context'
-import FabButton from './FabButton';
+import { FabButton } from './';
 
 
 
