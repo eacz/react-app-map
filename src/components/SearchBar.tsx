@@ -1,6 +1,6 @@
 import { ChangeEvent, useContext, useRef } from 'react'
 import { SearchResults } from '.'
-import { PlacesContext } from '../context'
+import { MapContext, PlacesContext } from '../context'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next';
 
@@ -24,7 +24,8 @@ const Wrapper = styled.div`
 
 const SearchBar = () => {
   const debounceRef = useRef<NodeJS.Timeout>()
-  const { searchPlacesByTerm } = useContext(PlacesContext)
+  const { searchPlacesByTerm,  } = useContext(PlacesContext)
+  const { removePolyline } = useContext(MapContext)
   const { t } = useTranslation()
 
   const onQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +33,10 @@ const SearchBar = () => {
       clearTimeout(debounceRef.current)
     }
     debounceRef.current = setTimeout(() => {
-      searchPlacesByTerm(e.target.value)
+      if(!e.target.value) {
+        removePolyline()
+      }
+        searchPlacesByTerm(e.target.value)
     }, 350)
   }
 

@@ -57,6 +57,14 @@ const MapProvider: FC = ({ children }) => {
     dispatch({ type: 'setCurrentLocation', payload: [lng, lat] })
   }
 
+  const removePolyline = () => {
+    if (state.map?.getLayer(sourceAndPolyLineId)) {
+      dispatch({type: 'setCurrentDirectionInfo', payload: null})
+      state.map.removeLayer(sourceAndPolyLineId)
+      state.map.removeSource(sourceAndPolyLineId)
+    }
+  }
+
   const getRouteBetweenPoints = async (direction: IDirection) => {
     const { start, end } = direction
     const res = await directionsApi.get<DirectionsResponse>(`/${start.join(',')};${end.join(',')}`)
@@ -68,9 +76,7 @@ const MapProvider: FC = ({ children }) => {
     kms /= 100
 
     const minutes = Math.floor(duration / 60)
-    console.log({ kms, minutes })
 
-    dispatch({type: 'setCurrentDirectionInfo', payload: { kms, minutes }})
 
     const bounds = new LngLatBounds(start, start)
     for (const coord of coords) {
@@ -96,11 +102,10 @@ const MapProvider: FC = ({ children }) => {
         ],
       },
     }
-    if (state.map?.getLayer(sourceAndPolyLineId)) {
-      state.map.removeLayer(sourceAndPolyLineId)
-      state.map.removeSource(sourceAndPolyLineId)
-    }
-
+   
+    removePolyline()
+    
+    dispatch({type: 'setCurrentDirectionInfo', payload: { kms, minutes }})
     state.map?.addSource(sourceAndPolyLineId, sourceData)
     state.map?.addLayer({
       id: sourceAndPolyLineId,
@@ -144,6 +149,7 @@ const MapProvider: FC = ({ children }) => {
         setMarkers,
         setZoom,
         setCurrentLocation,
+        removePolyline
       }}
     >
       {children}

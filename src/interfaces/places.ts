@@ -14,6 +14,7 @@ export interface Feature {
   properties:    Properties;
   text_en:       string;
   text_es:       string;
+  'text_es-ES':  string;
   place_name_en: string;
   text:          string;
   place_name:    string;

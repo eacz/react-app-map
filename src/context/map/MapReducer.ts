@@ -9,7 +9,7 @@ type MapActions =
 | { type: 'setMarkers'; payload: Marker[] }
 | { type: 'setZoom'; payload: number }
 | { type: 'setCurrentLocation'; payload: [number, number] }
-| { type: 'setCurrentDirectionInfo'; payload: DirectionInfo }
+| { type: 'setCurrentDirectionInfo'; payload: DirectionInfo | null }
 
 const MapReducer = (state: MapState, action: MapActions): MapState => {
   switch (action.type) {

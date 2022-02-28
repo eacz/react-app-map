@@ -50,8 +50,7 @@ const SearchResult = ({ place, activePlace, setActivePlace }: Props) => {
       key={place.id}
       className={`list-group-item list-group-item-action pointer ${place.id === activePlace ? 'active' : ''}`}
     >
-      {/* TODO: handle this reading properties through i18n */}
-      <h6>{place.text_en || place.text_es}</h6>
+      <h6>{place.text}</h6>
       <p>{place.place_name}</p>
       <button
         onClick={() => getRoute(place)}

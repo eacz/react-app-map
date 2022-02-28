@@ -16,6 +16,7 @@ interface MapContextProps {
   setMarkers: () => void,
   setZoom: (zoom: number) => void,
   setCurrentLocation: (lngLat: { lng: number, lat: number}) => void,
+  removePolyline: () => void
 }
 
 const MapContext = createContext({} as MapContextProps)
