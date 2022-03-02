@@ -1,5 +1,5 @@
 import { DefaultTheme } from 'styled-components'
-export { default as GlobalStyles } from './globalStyles'
+export { default as GlobalStyles } from './GlobalStyles'
 
 export type themeTypes = 'light' | 'dark'
 export type mapTheme = 'light-v10' | 'dark-v10'
