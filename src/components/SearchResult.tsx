@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Feature } from '../interfaces/places'
 import { MapContext, PlacesContext } from '../context'
 import { useTranslation } from 'react-i18next';
+import SearchContext from '../context/search/SearchContext';
 
 const Wrapper = styled.li`
   .list-group-item {
@@ -27,6 +28,7 @@ const SearchResult = ({ place, activePlace, setActivePlace }: Props) => {
   const { userLocation } = useContext(PlacesContext)
   const { map, getRouteBetweenPoints } = useContext(MapContext)
   const { t } = useTranslation()
+  const { setShowResults } = useContext(SearchContext)
 
   const onPlaceClick = (place: Feature) => {
     setActivePlace(place.id)
@@ -35,6 +37,8 @@ const SearchResult = ({ place, activePlace, setActivePlace }: Props) => {
       zoom: 14,
       center: [lng, lat],
     })
+    setShowResults(false)
+
   }
 
   const getRoute = (place: Feature) => {
@@ -42,6 +46,8 @@ const SearchResult = ({ place, activePlace, setActivePlace }: Props) => {
 
     const [lng, lat] = place.center
     getRouteBetweenPoints({start: userLocation, end: [lng, lat]})
+    setShowResults(false)
+
   }
 
   return (

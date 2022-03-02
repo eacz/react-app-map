@@ -1,13 +1,16 @@
 import { MapView, SearchBar, ToMyLocation, ToggleThemeButton, DirectionsInfo } from "../components"
+import SearchProvider from "../context/search/SearchProvider"
 
 const HomePage = () => {
   return (
     <div>
       <MapView />
       <ToMyLocation />
-      <SearchBar />
       <ToggleThemeButton />
       <DirectionsInfo />
+      <SearchProvider>
+        <SearchBar />
+      </SearchProvider>
     </div>
   )
 }
