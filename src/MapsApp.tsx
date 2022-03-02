@@ -2,7 +2,7 @@ import { Suspense, useContext } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { PlacesProvider, MapProvider, ThemeContext } from './context'
 import { HomePage, LoadingPage } from './pages'
-import GlobalStyles from './themes/GlobalStyles'
+import { GlobalStyles } from './themes'
 
 const MapsApp = () => {
   const { currentTheme } = useContext(ThemeContext)
