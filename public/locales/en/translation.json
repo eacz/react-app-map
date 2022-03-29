@@ -3,6 +3,9 @@
     "minutes": "minutes",
     "kilometers": "kms"
   },
+  "markers": {
+    "userMarker": "You're here"
+  },
   "search": "Seach places",
   "direction":"Directions",
   "loadingPlaces": {

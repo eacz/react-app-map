@@ -16,6 +16,7 @@ export interface Feature {
   text_es:       string;
   'text_es-ES':  string;
   place_name_en: string;
+  place_name_es: string;
   text:          string;
   place_name:    string;
   center:        number[];

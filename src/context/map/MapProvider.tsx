@@ -6,6 +6,7 @@ import { MapContext, PlacesContext, ThemeContext } from '../'
 import MapReducer from './MapReducer'
 import { directionsApi } from '../../apis'
 import { DirectionInfo, DirectionsResponse, IDirection } from '../../interfaces/directions'
+import { useTranslation } from 'react-i18next'
 export interface MapState {
   isMapReady: boolean
   map?: Map
@@ -30,9 +31,11 @@ const MapProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(MapReducer, initialState)
   const { places, userLocation } = useContext(PlacesContext)
   const { currentTheme } = useContext(ThemeContext)
+  const { t } = useTranslation()
+
 
   const setMap = (map: Map) => {
-    const myLocationPopUp = new Popup().setHTML(`<h4>Here I'm </h4>`)
+    const myLocationPopUp = new Popup().setHTML(`<h4>${t('markers.userMarker')}</h4>`)
 
     new Marker({ color: '#001780' }).setLngLat(userLocation).setPopup(myLocationPopUp).addTo(map)
 
@@ -128,7 +131,9 @@ const MapProvider: FC = ({ children }) => {
 
     for (const place of places) {
       const [lng, lat] = place.center
-      const popup = new Popup().setHTML(`<h6>${place.text_en}</h6> <p>${place.place_name_en}</p>`)
+
+      const html = `<h6>${place.text || ''}</h6> <p>${place.place_name || 'There is no information about this place'}</p>`
+      const popup = new Popup().setHTML(html)
       const newMarker = new Marker().setPopup(popup).setLngLat([lng, lat]).addTo(state.map!)
       newMarkers.push(newMarker)
     }
