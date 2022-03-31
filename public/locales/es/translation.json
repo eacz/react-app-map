@@ -11,5 +11,10 @@
   "loadingPlaces": {
     "h6": "Buscando...",
     "p": "Espere por favor..."
+  },
+  "places": {
+    "geolocationDenied": "Esta app necesita la ubicación para funcionar :(",
+    "askForGeolocation": "Porfavor, active la geolocalización y recargue la página"
+
   }
 }

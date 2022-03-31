@@ -11,20 +11,22 @@ export interface PlacesState {
   isLoading: boolean,
   userLocation?: [  number, number ],
   isLoadingPlaces: boolean,
-  places: Feature[]
+  places: Feature[],
+  geoLocationDenied: boolean
 }
 
 const initialState: PlacesState = {
   isLoading: true,
   userLocation: undefined,
   isLoadingPlaces: false,
-  places: []
+  places: [],
+  geoLocationDenied: false
 }
 
 
 const PlacesProvider: FC = ({children}) => {
   const [state, dispatch] = useReducer(placesReducer, initialState)
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   
   const searchPlacesByTerm = async (query:string): Promise<Feature[]> => {
     if(query.length === 0) {
@@ -48,7 +50,10 @@ const PlacesProvider: FC = ({children}) => {
     getUserLocation().then(coords => {
       dispatch({type: 'setUserLocation', payload: coords})
     })
-  }, [])
+    .catch(() => {
+      dispatch({type: 'setGeoLocationDenied', payload: true})
+    })
+  }, [t])
 
   return (
     <PlacesContext.Provider

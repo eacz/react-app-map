@@ -6,6 +6,7 @@ type placesActions =
 | { type: 'setIsLoading', payload: boolean }
 | { type: 'setIsLoadingPlaces', payload: boolean }
 | { type: 'setPlaces', payload: Feature[] }
+| { type: 'setGeoLocationDenied', payload: boolean }
 
 const placesReducer = (state: PlacesState, action: placesActions) : PlacesState => {
   switch(action.type){
@@ -17,6 +18,8 @@ const placesReducer = (state: PlacesState, action: placesActions) : PlacesState 
       return {...state, isLoadingPlaces: action.payload, places: []}
     case 'setPlaces':
       return { ...state, isLoadingPlaces: false, places: action.payload }
+    case 'setGeoLocationDenied':
+      return {...state, geoLocationDenied: action.payload}
     default:
       return state;
   }

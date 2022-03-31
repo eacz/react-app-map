@@ -6,7 +6,8 @@ export interface placesContextProps {
   userLocation?: [ number, number ],
   isLoadingPlaces: boolean,
   places: Feature[],
-  searchPlacesByTerm: (query: string) => Promise<Feature[]>
+  geoLocationDenied: boolean,
+  searchPlacesByTerm: (query: string) => Promise<Feature[]>,
 }
 
 
